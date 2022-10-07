@@ -1,0 +1,20 @@
+def taynayakomnata(a):
+    while a.isdigit() == False:
+        a = input("a=")
+    else:
+        a = int(a)
+    return a
+def massivka(n,m):
+    a = {}
+    for i in range(n):
+        for j in range(m):
+            a[i, j] = taynayakomnata(input())
+    for i in range(n):
+        print(*[a[i, j] for j in range(m)])
+    return a
+print("Введите количество строк n ")
+n = taynayakomnata(input())
+print("Ведите количество столбцов m")
+m = taynayakomnata(input())
+print("Введите элементы массива")
+massivka(n,m)
