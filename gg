@@ -1,0 +1,4 @@
+    for i in range(len(a)): i_narray = narray[i]
+    for j in range(len(i_narray)):
+        print(i_narray[j], "\n")
+    return i_narray[j]
