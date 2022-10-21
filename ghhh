@@ -1,0 +1,31 @@
+def taynayakomnata(a):
+    while a.isdigit() == False:
+        a = input("a=")
+    else:
+        a = int(a)
+    return a
+def read_matrix_from_console():
+    n = taynayakomnata(input())
+    m = taynayakomnata(input())
+    A = []
+    for i in range(n):
+        for j in range(m):
+            row = input().split()
+        row[j] = int(row[j])
+    A.append(row)
+    return A
+
+def print_matrix_to_console(A):
+    for row in A:
+        for elem in row:
+            print(elem, end=' ')
+        print()
+
+
+print("Введите количество строк n ")
+n = taynayakomnata(input())
+print("Введите количество столбцов m")
+m = taynayakomnata(input())
+print("Введите элементы массива")
+read_matrix_from_console()
+print_matrix_to_console(A)
