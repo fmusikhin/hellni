@@ -18,3 +18,55 @@ print("Ведите количество столбцов m")
 m = taynayakomnata(input())
 print("Введите элементы массива")
 massivka(n,m)
+
+
+def determinant(new_mat):
+    if len(new_mat) != 2 or len(new_mat[0]) != 2:
+        return None
+    else:
+        print("Определитель матрицы: ")
+        print(new_mat[0][0]*new_mat[1][1] - new_mat[0][1]*new_mat[1][0])
+        
+def delete_row_and_column(mat, row_num, col_num):
+    new_mat = []
+    for i in range(len(mat)):
+        if i != row_num:
+            new_row = []
+            for j in range(len(mat[i])):
+                if j != col_num:
+                    new_row.append(mat[i][j])
+            new_mat.append(new_row)
+    return new_mat
+
+def massivka():
+    mat = []
+    m = int(input("Введите количество строк матрицы: "))
+    n = int(input("Введите количество столбцов матрицы: "))
+    for i in range(m):
+        row = []
+        for j in range(n):
+            elem = int(input(f"Введите элемент [{i}][{j}]: "))
+            row.append(elem)
+        mat.append(row)
+    return mat
+
+def print_matrix(mat):
+    for row in mat:
+        for elem in row:
+            print(elem, end=' ')
+        print()
+
+mat = massivka()
+print("Исходная матрица:")
+print_matrix(mat)
+row_num = int(input("Введите номер строки для удаления: "))
+col_num = int(input("Введите номер столбца для удаления: "))
+if row_num < 0 or row_num >= len(mat) or col_num < 0 or col_num >= len(mat[0]):
+    print("Ошибка: некорректный номер строки или столбца")
+else:
+    new_mat = delete_row_and_column(mat, row_num, col_num)
+    print("Новая матрица:")
+    print_matrix(new_mat)
+    determinant(new_mat)
+ 
+        
