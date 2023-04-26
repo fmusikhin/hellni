@@ -1,0 +1,80 @@
+import random
+
+def create_matrix(m, n, min_value, max_value):
+    return [[random.randint(min_value, max_value) for _ in range(n)] for _ in range(m)]
+
+def add_matrices(A, B):
+    return [[A[i][j] + B[i][j] for j in range(len(A[0]))] for i in range(len(A))]
+
+def subtract_matrices(A, B):
+    return [[A[i][j] - B[i][j] for j in range(len(A[0]))] for i in range(len(A))]
+
+def multiply_matrices(A, B):
+    result = [[0] * len(B[0]) for _ in range(len(A))]
+    for i in range(len(A)):
+        for j in range(len(B[0])):
+            for k in range(len(B)):
+                result[i][j] += A[i][k] * B[k][j]
+    return result
+
+def matrix_minor(matrix, i, j):
+    return [row[:j] + row[j+1:] for row in (matrix[:i] + matrix[i+1:])]
+
+def matrix_determinant(matrix):
+    if len(matrix) == 2:
+        return matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0]
+
+    determinant = 0
+    for c in range(len(matrix)):
+        determinant += ((-1)**c) * matrix[0][c] * matrix_determinant(matrix_minor(matrix, 0, c))
+    return determinant
+
+def matrix_inverse(matrix):
+    determinant = matrix_determinant(matrix)
+    if determinant == 0:
+        return None
+
+    if len(matrix) == 2:
+        return [[matrix[1][1]/determinant, -1*matrix[0][1]/determinant],
+                [-1*matrix[1][0]/determinant, matrix[0][0]/determinant]]
+
+    cofactors = []
+    for r in range(len(matrix)):
+        cofactor_row = []
+        for c in range(len(matrix)):
+            minor = matrix_minor(matrix, r, c)
+            cofactor_row.append(((-1)**(r+c)) * matrix_determinant(minor))
+        cofactors.append(cofactor_row)
+    cofactors = transpose_matrix(cofactors)
+    for r in range(len(cofactors)):
+        for c in range(len(cofactors)):
+            cofactors[r][c] = cofactors[r][c] / determinant
+    return cofactors
+
+def divide_matrices(A, B):
+    B_inv = matrix_inverse(B)
+    if B_inv is None:
+        return None
+    return multiply_matrices(A, B_inv)
+
+def transpose_matrix(A):
+    return [[A[j][i] for j in range(len(A))] for i in range(len(A[0]))]
+
+def main():
+    while True:
+        operation = input("Выберите операцию (add, subtract, multiply, divide, transpose, create, exit): ").lower()
+
+        if operation == "exit":
+            break
+
+        if operation == "create":
+            m = int(input("Введите количество строк: "))
+            n = int(input("Введите количество столбцов: "))
+            min_value = int(input("Введите минимальное значение элемента: "))
+            max_value = int(input("Введите максимальное значение элемента: "))
+            A = create_matrix(m, n, min_value, max_value)
+            print("Сгенерированная матрица:")
+            for row in A:
+                print(row)
+
+        elif operation in ["
